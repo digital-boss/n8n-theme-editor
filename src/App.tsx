@@ -1,24 +1,50 @@
-import type { Component } from 'solid-js';
-
-import logo from './logo.svg';
+import { createSignal, type Component, For, Show, JSX, createEffect, Signal } from 'solid-js';
+import Color from 'color';
 import styles from './App.module.css';
+import { SignalOpt, expandTree } from './utils';
+import { config } from './config';
+
+const colors: Record<string, SignalOpt<Color>> = Object.fromEntries(
+  Object.entries(
+    expandTree(config)
+  ).sort(
+    ([name, [accessor, setter]]) => 0 //setter === undefined ? 1 : -1
+  )
+);
+
+// for (let [cssVarName, [accessor, setter]] of Object.entries(colors)) {
+//   console.log(`${cssVarName}: ${accessor()}; ${setter === undefined ? 'undefined': ''}`);
+// }
 
 const App: Component = () => {
+
+  const handleInputChange: JSX.ChangeEventHandler<HTMLInputElement, Event> = (e) => {
+    const { dataset, value } = e.currentTarget;
+    const { color } = dataset;
+    const [_, setter] = colors[color!];
+    const v = Color(value);
+    if (setter !== undefined) {
+      setter(v);
+    }
+  };
+
   return (
     <div class={styles.App}>
       <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
+
+        <For each={Object.entries(colors)}>{([varName, [accessor, setter]]) => 
+          <div class={styles.item}>
+            <span>{varName}:</span>
+            <Show 
+              when={setter !== undefined}
+              fallback={<div style={{background: accessor().hex()}} class={styles.box}></div>}
+            >
+              <input data-color={varName} type="text" data-coloris onChange={handleInputChange} value={accessor().hex()}></input>
+            </Show>
+          </div>
+        }</For>
+
+        
       </header>
     </div>
   );

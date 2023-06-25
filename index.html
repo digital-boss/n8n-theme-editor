@@ -5,14 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <link rel="shortcut icon" type="image/ico" href="/src/assets/favicon.ico" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+
     <title>Solid App</title>
+
+    <style type="text/css">
+      input {
+        height: 32px;
+        padding: 0 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        box-sizing: border-box;
+      }
+
+      .clr-field button {
+        width: 22px;
+        height: 22px;
+        left: 5px;
+        right: auto;
+        border-radius: 5px;
+      }
+  
+      .clr-field input {
+        padding-left: 36px;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div style="display: flex;">
-      <iframe src="http://localhost:5678/" frameborder="0" style="width: 100%;"></iframe>
+      <iframe id="n8n" src="http://localhost/n8n/" frameborder="0" style="width: 100%;"></iframe>
       <div id="root"></div>
     </div>
     <script src="/src/index.tsx" type="module"></script>
+    <script type="text/javascript">
+      Coloris({
+        theme: 'pill',
+        themeMode: 'dark',
+        formatToggle: true,
+        closeButton: true,
+        clearButton: true,
+      });
+    </script>
   </body>
 </html>
