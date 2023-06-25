@@ -1,7 +1,7 @@
 import Color from 'color';
 import { createSign } from 'crypto';
 import type { Accessor, Setter, Signal } from 'solid-js';
-import { createSignal } from 'solid-js';
+import { createSignal, createEffect } from 'solid-js';
 type Path = Array<string | number>;
 type Fn = (path: Path, value: any) => void;
 
@@ -54,12 +54,20 @@ export const expandTree = (tree: object): Record<string, SignalOpt<Color>> => {
     if (typeof (value) === 'function') {
       const [_, parentAccessor] = getParentAccessor(path);
       const derivedSignal = () => value(parentAccessor()) as Color;
+      createEffect(() => {
+        const n8n = document.getElementById('n8n') as any;
+        n8n.contentWindow.document.documentElement.style.setProperty(cssVarName, derivedSignal());
+      });
       result[cssVarName] = [derivedSignal, undefined];
     } else {
       const defaultValue = value === undefined ? getCurrentValue(cssVarName) : value;
       const defaultValue2 = defaultValue.replace(/\s+/g, '')
       // console.log(`${cssVarName} = ${defaultValue2}`)
       const signal = createSignal(Color(defaultValue2));
+      createEffect(() => {
+        const n8n = document.getElementById('n8n') as any;
+        n8n.contentWindow.document.documentElement.style.setProperty(cssVarName, signal[0]());
+      });
       result[cssVarName] = signal;
     }
   }
