@@ -1,4 +1,4 @@
-import h from './color-helpers';
+import h from '../color-helpers';
 
 export const config = {
   primary: {

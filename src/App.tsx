@@ -2,7 +2,7 @@ import { createSignal, type Component, For, Show, JSX, createEffect, Signal } fr
 import Color from 'color';
 import styles from './App.module.css';
 import { SignalOpt, expandTree } from './utils';
-import { config } from './config';
+import { config } from './themes/dark';
 
 const colors: Record<string, SignalOpt<Color>> = Object.fromEntries(
   Object.entries(
@@ -15,6 +15,12 @@ const colors: Record<string, SignalOpt<Color>> = Object.fromEntries(
 // for (let [cssVarName, [accessor, setter]] of Object.entries(colors)) {
 //   console.log(`${cssVarName}: ${accessor()}; ${setter === undefined ? 'undefined': ''}`);
 // }
+
+document.addEventListener('coloris:pick', (event: any) => {
+  const cssVarName = event.detail.currentEl.dataset.color;
+  const n8n = document.getElementById('n8n') as any;
+  n8n.contentWindow.document.documentElement.style.setProperty(cssVarName, event.detail.color);
+});
 
 const App: Component = () => {
 
