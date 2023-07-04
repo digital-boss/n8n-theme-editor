@@ -24,7 +24,7 @@ document.addEventListener('coloris:pick', (event: any) => {
 
 const App: Component = () => {
 
-  const handleInputChange: JSX.ChangeEventHandler<HTMLInputElement, Event> = (e) => {
+  const onInputChange: JSX.ChangeEventHandler<HTMLInputElement, Event> = (e) => {
     const { dataset, value } = e.currentTarget;
     const { color } = dataset;
     const [_, setter] = colors[color!];
@@ -33,6 +33,14 @@ const App: Component = () => {
       setter(v);
     }
   };
+
+  const onExport = () => {
+    const result: string[] = [];
+    for (let [cssVar, [accessor, setter]] of Object.entries(colors)) {
+      result.push(`${cssVar}: ${accessor().hsl()};`);
+    }
+    console.log(result.join('\n'));
+  }
 
   return (
     <div class={styles.App}>
@@ -45,11 +53,13 @@ const App: Component = () => {
               when={setter !== undefined}
               fallback={<div style={{background: accessor().hex()}} class={styles.box}></div>}
             >
-              <input data-color={varName} type="text" data-coloris onChange={handleInputChange} value={accessor().hex()}></input>
+              <input data-color={varName} type="text" data-coloris onChange={onInputChange} value={accessor().hex()}></input>
             </Show>
           </div>
         }</For>
 
+        
+        <button onclick={onExport}>Export</button>
         
       </header>
     </div>
