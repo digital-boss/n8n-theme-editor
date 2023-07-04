@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 
 const root = document.getElementById('root');
+const iframe = document.getElementById('n8n');
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   throw new Error(
@@ -12,4 +13,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
-render(() => <App />, root!);
+iframe!.addEventListener('load', () => {
+  render(() => <App />, root!);
+});
+
