@@ -1,4 +1,19 @@
-## Usage
+The ways of running n8n:
+- local
+  - from n8n core
+  - from local setup
+- Existing instance by specifying URL
+- docker
+
+
+Building Image
+
+docker compose up --build -d app
+
+https://stackblitz.com/
+
+
+## Installing Dependencies
 
 Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
 
@@ -7,8 +22,6 @@ This is the reason you see a `pnpm-lock.yaml`. That being said, any package mana
 ```bash
 $ npm install # or pnpm install or yarn install
 ```
-
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
 
 ## Available Scripts
 
