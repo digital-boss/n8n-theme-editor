@@ -40,3 +40,6 @@ In dist/assets/index*.js there is unexpected React reference:
 Resources: 
 - [@vitejs/plugin-react@1.1.4: ReferenceError: React is not defined when rendering a Dialog-component from @mui/material](https://github.com/vitejs/vite/issues/6537). Similar problem. 
 
+## Solution
+
+The cause of the problem turned out to be that I did not enable tsconfig.json and vite.config.ts to container. 
