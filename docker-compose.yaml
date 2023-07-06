@@ -1,46 +1,44 @@
 version: "3.3"
 services:
-  # n8n:
-  #   image: n8nio/n8n
-  #   volumes:
-  #     - "${HOME}/.n8n:/home/node/.n8n"
-  #     # Uncomment following line if you have simlinks from /home/node/.n8n to your repos location. Ensure you correctly setup REPOS_PATH env variable.
-  #     #- "${HOME}${REPOS_PATH}:/home/node${REPOS_PATH}"
-  #   networks:
-  #     - n8n-embed
-  #   restart: unless-stopped
-  #   environment:
-  #     # - N8N_PROTOCOL=http
-  #     # - N8N_HOST=127.0.0.1
-  #     # - N8N_PORT=5678
-  #     - N8N_PATH=/n8n/
-  #     # - N8N_EDITOR_BASE_URL=http://127.0.0.1:8080/n8n/
-  #     # - VUE_APP_URL_BASE_API=http://127.0.0.1:8080/n8n/
-  #     - WEBHOOK_URL=http://127.0.0.1:8080/n8n/
-  #     - N8N_SMTP_HOST
-  #     - N8N_SMTP_PORT
-  #     - N8N_SMTP_USER
-  #     - N8N_SMTP_PASS
-
-  # app:
-  #   build: app
-  #   volumes:
-  #     - ./app/index.html:/app/index.html
-  #   networks:
-  #     - n8n-embed
-
-  web:
-    image: nginx
-    network_mode: host
+  n8n:
+    image: n8nio/n8n
+    container_name: n8nthemes-n8n
     # networks:
-    #   - n8n-embed
+    #   - n8n-theme-editor
+    volumes:
+      - n8n:/home/node
+      # - "${HOME}/.n8n:/home/node/.n8n"
+    environment:
+      - N8N_PORT=${N8NTHEMES_PORT_N8N:-5678}
+      - N8N_PATH=/n8n/
+      # - WEBHOOK_URL=http://127.0.0.1:8080/n8n/
+
+  editor:
+    build: .
+    image: n8n-theme-editor:latest
+    container_name: n8nthemes-editor
+    # networks:
+    #   - n8n-theme-editor
+    environment:
+      - PORT=${N8NTHEMES_PORT_EDITOR:-3000}
+
+  nginx:
+    image: nginx
+    container_name: n8nthemes-nginx
+    # networks:
+    #   - n8n-theme-editor
     volumes:
       - ./nginx-templates:/etc/nginx/templates
-    # ports:
-    #   - "8080:80"
     environment:
-      - NGINX_HOST=127.0.0.1
-      - NGINX_PORT=80
+      - NGINX_PORT=${N8NTHEMES_PORT_NGINX:-80}
+      - N8NTHEMES_N8N_URL=${N8NTHEMES_N8N_URL:-http://n8n:5678/}
+      - N8NTHEMES_EDITOR_URL=${N8NTHEMES_EDITOR_URL:-http://editor:3000/}
+    ports:
+      - ${N8NTHEMES_PORT_NGINX:-80}:${N8NTHEMES_PORT_NGINX:-80}
 
-networks:
-  n8n-embed:
+# networks:
+#   n8n-theme-editor:
+
+volumes:
+  n8n:
+    name: n8nthemes-n8n

@@ -7,7 +7,7 @@ type Fn = (path: Path, value: any) => void;
 
 const arrayToObj = (arr: any[]) => Object.fromEntries(arr.map((item, idx) => [idx+1, item]))
 
-const traverseTree = (tree: object, fn: Fn, path: Path = []) => {
+export const traverseTree = (tree: object, fn: Fn, path: Path = []) => {
   for (let [key, value] of Object.entries(tree)) {
     if (typeof (value) === 'object') {
       const t = value instanceof Array ? arrayToObj(value) : value;
@@ -18,7 +18,7 @@ const traverseTree = (tree: object, fn: Fn, path: Path = []) => {
   }
 }
 
-const getCssVarName = (path: Path) => {
+export const getCssVarName = (path: Path) => {
   const lastKey = path[path.length - 1];
   const p = lastKey === '$' ? path.slice(0, -1) : path;
   return ['--color', ...p].join('-');

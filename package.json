@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "export": "ts-node ./scripts/export.ts"
+    "export": "ts-node ./scripts/export.ts",
+    "expand-sample": "ts-node ./scripts/expand-sample.ts"
   },
   "license": "MIT",
   "devDependencies": {

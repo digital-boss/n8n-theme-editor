@@ -6,7 +6,9 @@ COPY src ./src
 RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+FROM alpine:latest
+COPY --from=builder /app/dist /var/www/html
+RUN apk add --no-cache busybox busybox-extras
+ENV PORT=80
+EXPOSE $PORT
+CMD httpd -f -p $PORT -h /var/www/html
