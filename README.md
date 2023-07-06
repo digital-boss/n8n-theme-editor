@@ -1,7 +1,5 @@
 # n8n Theme Editor
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/digital-boss/n8n-theme-editor)
-
 The [n8n](https://n8n.io/) **Theme Editor** allows you to edit the [n8n theme colors](https://docs.n8n.io/embed/white-labelling/#theme-colors) in real time. After you have successfully pick the colors, you can save the theme to a `packages/design-system/src/css/_tokens.scss` [file](https://github.com/n8n-io/n8n/blob/master/packages/design-system/src/css/_tokens.scss).
 
 ![](docs/images/main-screen.png)
