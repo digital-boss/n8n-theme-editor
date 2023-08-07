@@ -2,7 +2,7 @@ import { createSignal, type Component, For, Show, JSX, createEffect, Signal } fr
 import Color from 'color';
 import styles from './App.module.css';
 import { SignalOpt, expandTree } from './utils';
-import { config } from './themes/dark';
+import { config } from './themes/current';
 
 
 

@@ -38,9 +38,9 @@ To run in this mode:
 - `make up PROFILE=local SERVICES="<srv1> <srv2> ..."` to start only selected services. For list of services you can use combinations
   - `nginx n8n` In case you want to run editor in dev mode manually
   - `nginx editor` In case you have working instance of n8n
-  - `nginx` In case you have n8n and editor, and want only proxy service to route two of them under single [origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+  - `nginx` In case you have n8n and editor started, and want only proxy service to route two of them under single [origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
-Command `make up PROFILE=local` (withoud explicitly specifying services) will start all services in host network. But in case you want to run all tree docker services, consider to use [Isolated mode](#isolated-mode-all-services-in-docker). Every service you run in [host network mode](https://docs.docker.com/network/drivers/host/) ([more details](https://www.metricfire.com/blog/understanding-dockers-net-host-option/)) will expose their port in host network.
+Command `make up PROFILE=local` (without explicitly specifying services) will start all services in host network. But in case you want to run all tree docker services, consider to use [Isolated mode](#isolated-mode-all-services-in-docker). Every service you run in [host network mode](https://docs.docker.com/network/drivers/host/) ([more details](https://www.metricfire.com/blog/understanding-dockers-net-host-option/)) will expose their port in host network.
 
 
 #### Variables
